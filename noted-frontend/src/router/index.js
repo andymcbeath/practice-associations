@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import SignupView from "../views/SignupView.vue";
+import LoginView from "../views/LoginView.vue";
+import LogoutView from "../views/LogoutView.vue";
 import ScoresIndex from "../views/ScoresIndex.vue";
+import ScoresNew from "../views/ScoresNew.vue";
+import ScoresShow from "../views/ScoresShow.vue";
+import ScoresEdit from "../views/ScoresEdit.vue";
 
 const routes = [
   {
@@ -17,7 +23,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  { path: "/signup", name: "signup", component: SignupView },
+  { path: "/login", name: "login", component: LoginView },
+  { path: "/logout", name: "logout", component: LogoutView },
   { path: "/scores", name: "scores-index", component: ScoresIndex },
+  { path: "/scores/new", name: "scores-new", component: ScoresNew },
+  { path: "/scores/:id", name: "scores-show", component: ScoresShow },
+  { path: "/scores/:id/edit", name: "scores-edit", component: ScoresEdit },
 ];
 
 const router = createRouter({
