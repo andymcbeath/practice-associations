@@ -13,9 +13,9 @@ export default {
   },
   methods: {
     indexScores: function () {
-      axios.get("/scores").then((response) => {
-        console.log("scores index", response);
+      axios.get("/scores.json").then((response) => {
         this.scores = response.data;
+        console.log("All Scores:", this.scores);
       });
     },
     filterScores: function () {
@@ -32,7 +32,7 @@ export default {
 <template>
   <div class="scores-index">
     <h1>All Scores</h1>
-    Search by title:
+    Search:
     <input v-model="titleFilter" list="titles" type="text" />
     <TransitionGroup name="list">
       <datalist id="titles">
@@ -45,26 +45,36 @@ export default {
         v-bind:key="score.id"
         v-on:click="currentScore = score"
         v-bind:class="{ selected: score === currentScore }"
-      ></div>
+      >
+        <h2>{{ score.title }}</h2>
+        <p>Composer: {{ score.composer }}</p>
+        <router-link v-bind:to="`/scores/${score.id}`"
+          ><button
+            class="btn btn-outline-primary"
+            style="
+              --bs-btn-padding-y: 0.25rem;
+              --bs-btn-padding-x: 0.5rem;
+              --bs-btn-font-size: 1.12rem;
+              margin-bottom: 10px;
+            "
+          >
+            View and Hear Score
+          </button></router-link
+        >
+      </div>
     </TransitionGroup>
-  </div>
-  <div v-for="score in scores" v-bind:key="score.id">
-    <h2>{{ score.title }}</h2>
-    <p>Composer: {{ score.composer }}</p>
-    <p>Score's Flat Id: {{ score.score }}</p>
-    <router-link v-bind:to="`/scores/${score.id}`"
-      >View and Hear Score</router-link
-    >
   </div>
 </template>
 
-<style type="text/css">
-body {
-  margin: 0;
+<style>
+.scores-index {
+  font-size: large;
+  font-style: normal;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 #embed-container {
   width: 100%;
-  height: 750px;
+  height: 600px;
   margin-top: 40px;
 }
 </style>

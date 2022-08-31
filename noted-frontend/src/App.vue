@@ -1,8 +1,27 @@
+<script>
+export default {
+  data: function () {
+    return {
+      isLoggedIn: false,
+      flashMessage: "Hello, welcome to Noted!",
+    };
+  },
+  methods: {
+    getUserId: function () {
+      return localStorage.getItem("user_id");
+    },
+  },
+  watch: {
+    $route: function () {
+      this.isLoggedIn = !!localStorage.jwt;
+      this.flashMessage = localStorage.getItem("flashMessage");
+      localStorage.removeItem("flashMessage");
+    },
+  },
+};
+</script>
 <template>
-  <nav
-    class="navbar sticky-top navbar-expand-sm navbar-dark"
-    style="background-color: blue"
-  >
+  <nav class="navbar sticky-top navbar-expand-sm navbar-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img
@@ -31,20 +50,34 @@
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/signup"
+            <a
+              v-if="!isLoggedIn"
+              class="nav-link active"
+              aria-current="page"
+              href="/signup"
               >Sign Up</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/scores">All Scores</a>
+            <a v-if="isLoggedIn" class="nav-link active" href="/scores"
+              >All Scores</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/login"
+            <a
+              v-if="!isLoggedIn"
+              class="nav-link active"
+              aria-current="page"
+              href="/login"
               >Log In</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/logout"
+            <a
+              v-if="isLoggedIn"
+              class="nav-link active"
+              aria-current="page"
+              href="/logout"
               >Log Out</a
             >
           </li>
@@ -64,30 +97,38 @@
   <router-view /> -->
   <router-view />
 </template>
-
+<div v-if="flashMessage" class="alert alert-info">
+  {{ flashMessage }}
+</div>
 <style>
-body {
-  background: whitesmoke;
+.home2 {
+  background-image: url("~@/assets/LogoForNoted.png");
+  background-size: 30%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-position-y: 100px;
+  background-position-y: 350px;
 }
+.navbar {
+  font-size: large;
+  font-style: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: #0a69c2;
+}
+/* body {
+  /* background-image: url(./assets/noteImage.png);
+  background-size: 45%;
+  height: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 100px; */
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: whitesmoke;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>

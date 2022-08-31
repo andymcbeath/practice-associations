@@ -1,5 +1,7 @@
 <script>
 import axios from "axios";
+// import Embed from "flat-embed";
+
 export default {
   data: function () {
     return {
@@ -24,6 +26,18 @@ export default {
   },
 };
 </script>
+<!-- <div id="embed-container"></div>
+<script src="https://prod.flat-cdn.com/embed-js/v1.4.1/embed.min.js"></script>
+<script>
+var container = document.getElementById("embed-container");
+var embed = new Flat.Embed(container, {
+  score: "<score-id-you-want-to-load>",
+  embedParams: {
+    appId: "<your-app-id>",
+    controlsPosition: "bottom",
+  },
+});
+</script> -->
 
 <template>
   <div class="scores-new">
